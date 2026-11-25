@@ -35,5 +35,7 @@ jobs:
       - uses: actions/upload-pages-artifact@v4
         with:
           path: public
+      - name: Allow the Pages artifact to become available
+        run: sleep 25
       - uses: actions/deploy-pages@v4
         id: deploy
