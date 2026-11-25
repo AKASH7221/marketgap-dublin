@@ -1,0 +1,39 @@
+name: Publish MarketGap Dublin
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 6 * * *'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: marketgap-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.event_name == 'workflow_dispatch' || vars.ENABLE_DAILY_PUBLISH == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node test.mjs
+      - uses: actions/configure-pages@v5
+      - name: Prepare site and fetch current transport notices
+        run: |
+          mkdir public
+          cp index.html style.css app.mjs model.mjs transit.mjs public/
+          node prepare-feed.mjs public/transit.json
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+      - uses: actions/deploy-pages@v4
+        id: deploy
