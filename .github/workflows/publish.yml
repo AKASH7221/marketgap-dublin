@@ -32,7 +32,7 @@ jobs:
           mkdir public
           cp index.html style.css app.mjs model.mjs transit.mjs public/
           node prepare-feed.mjs public/transit.json
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: public
       - uses: actions/deploy-pages@v4
