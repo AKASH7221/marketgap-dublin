@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MarketGap Dublin | Location explorer</title>
+<meta name="description" content="Explore Dublin neighbourhoods and model the costs of opening a business.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.9.0/dist/maplibre-gl.css">
+<link rel="stylesheet" href="./style.css">
+<script defer src="https://cdn.jsdelivr.net/npm/maplibre-gl@5.9.0/dist/maplibre-gl.js"></script>
+<script type="module" src="./app.mjs"></script><script type="module" src="./transit.mjs"></script></head>
+<body><header><a class="brand" href="./"><span class="logo" aria-hidden="true">▥</span><span>MarketGap <small>DUBLIN</small></span></a><nav aria-label="Main"><a href="#explore">Explore</a><a href="#calculator">Calculator</a><a href="#transport">Transport</a><a href="#sources">Data sources</a></nav></header>
+<main><section class="intro" id="explore"><div><p class="eyebrow">DUBLIN BUSINESS EXPLORER</p><h1>Where should you open next?</h1><p>Explore Dublin neighbourhoods and compare business scenarios on a street-level map.</p></div><span class="badge">Demo opportunity data</span></section>
+<div class="workspace"><aside class="panel filters"><h2>Explore locations</h2>
+<label for="category">Business category</label><select id="category"><option value="coffee">Coffee shops</option><option value="food">Casual dining</option><option value="fitness">Fitness studios</option><option value="retail">Specialty retail</option></select>
+<label for="budget">Investment budget <output id="budgetValue" for="budget"></output></label><input type="range" id="budget" min="10000" max="250000" step="5000" value="50000"><div class="range"><span>€10k</span><span>€250k</span></div>
+<label for="areaSearch">Find a neighbourhood</label><input type="search" id="areaSearch" placeholder="e.g. Rathmines">
+<div class="results-heading"><h3>Opportunity rankings</h3><span id="count" aria-live="polite"></span></div><div id="results"></div></aside>
+<section class="panel map-panel" aria-label="Dublin map"><div class="map-head"><div><h2>Dublin street map</h2><p>OpenStreetMap geography</p></div><button id="mapMode" type="button" aria-pressed="false" disabled>3D view</button></div>
+<div class="map-wrap"><div id="map" aria-label="Interactive Dublin map"></div><p class="map-status" id="mapStatus" role="status">Loading the Dublin map…</p></div>
+<div class="map-footer"><label><input id="heatmap" type="checkbox" disabled> Demo heatmap</label><label>Opacity <input id="opacity" aria-label="Heatmap opacity" type="range" min="0.1" max="1" step="0.1" value="0.5" disabled></label><span>Zoom in for building and address detail.</span></div></section></div>
+<section class="panel detail" aria-labelledby="detailTitle"><div><p class="eyebrow">SELECTED LOCATION · DEMO</p><h2 id="detailTitle">Location analysis</h2><p id="detailText"></p></div><div id="detailMetrics" class="metrics"></div></section>
+<section id="calculator" class="panel calculator"><div><p class="eyebrow">FINANCIAL CALCULATOR</p><h2>Model your business</h2><p>Adjust the example assumptions to estimate monthly operating profit, break-even and simple payback.</p></div>
+<form id="finance"><div class="fields">
+<label>Startup investment (€)<input name="investment" type="number" min="0" max="1000000000" step="0.01" required value="50000"></label>
+<label>Customers per day<input name="customers" type="number" min="0" max="1000000" required value="90"></label>
+<label>Average spend (€)<input name="spend" type="number" min="0" max="1000000" step="0.01" required value="8.5"></label>
+<label>Trading days per month<input name="days" type="number" min="1" max="31" required value="26"></label>
+<label>Variable costs (% of sales)<input name="variable" type="number" min="0" max="100" step="0.01" required value="35"></label>
+<label>Monthly fixed costs (€)<input name="fixed" type="number" min="0" max="1000000000" step="0.01" required value="8500"></label></div></form>
+<div id="financeResults" class="metrics finance-results" aria-live="polite"></div><p class="fine">Illustrative inputs. Estimates exclude tax, debt service, depreciation and one-off expenses. Annual ROI assumes a full year at the same monthly profit.</p></section>
+<section id="transport" class="panel sources"><h2>Dublin transport updates</h2><p id="transitStatus" role="status">Checking the latest daily snapshot…</p><ul id="transitNotices"></ul><p><a href="https://www.transportforireland.ie/plan-a-journey/service-updates/">Transport for Ireland service updates</a></p></section><section id="sources" class="panel sources"><h2>Data sources and methodology</h2><p>The street map uses OpenStreetMap data via OpenFreeMap. Roads, buildings, addresses and points of interest depend on map coverage and zoom level.</p><p>Opportunity scores, minimum investment estimates and the heatmap are simulated. The score weights are 45% demand, 35% competition gap and 20% accessibility. Budget filters the list by illustrative startup cost. Neighbourhood pins are approximate centres.</p><p><a href="https://openfreemap.org/">OpenFreeMap</a> · <a href="https://www.openstreetmap.org/copyright">OpenStreetMap attribution</a></p></section></main>
+<footer>MarketGap Dublin <span>Business location explorer</span></footer></body></html>
